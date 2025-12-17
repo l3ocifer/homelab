@@ -479,41 +479,52 @@ curl -I https://traefik.leopaska.xyz
 
 ## 📁 Directory Structure
 
+This repository is organized as a monorepo with git submodules for major components.
+
 ```
-homelab/
+homelab/                                # Git monorepo
 ├── README.md                           # This comprehensive guide
-├── CAPACITY_AND_HEALTH_REPORT.md       # System health report
-├── alef/                               # K3s cluster & ArgoCD config
+├── .gitmodules                         # Submodule definitions
+│
+├── docs/                               # All documentation (lowercase-dashes)
+│   ├── reorganization-plan.md          # Architecture migration plan
+│   ├── capacity-and-health-report.md   # System health report
+│   ├── ollama-*.md                     # Ollama setup guides
+│   └── ...
+│
+├── scripts/                            # Homelab-wide utility scripts
+│   └── init-git-repo.sh                # Repository initialization
+│
+├── alef/                               # [SUBMODULE] K3s cluster & ArgoCD
 │   ├── argocd/                         # GitOps configuration
 │   │   ├── applications/               # ArgoCD app definitions
 │   │   └── root-app.yaml               # App of Apps pattern
-│   ├── config/
-│   │   └── k3s/                        # K3d cluster configuration
-│   ├── helm-charts/                    # Reusable Helm charts
-│   │   ├── database/
-│   │   ├── microservice/
-│   │   └── monitoring/
-│   ├── scripts/                        # Cluster management scripts
-│   │   ├── init-k3d-cluster.sh         # Cluster initialization
-│   │   ├── setup-docker-k3s-bridge.sh  # Docker↔K3s integration
-│   │   └── push-images-to-k3d.sh       # Image registry sync
+│   ├── config/k3s/                     # K3d cluster configuration
 │   ├── terraform/                      # Infrastructure as Code
-│   │   ├── homelab-k3s/                # K3s Terraform modules
-│   │   └── modules/                    # Reusable TF modules
-│   ├── k3s-external-services.yaml      # Docker→K3s connectivity
-│   └── production-apps-deployments.yaml # Production app manifests
-├── services/                           # Docker services
+│   ├── scripts/                        # Cluster management scripts
+│   └── services/                       # Systemd service files
+│
+├── services/                           # [SUBMODULE] Docker services & Ansible
 │   ├── docker-compose.yml              # All Docker service definitions
-│   ├── .env                            # Environment configuration
-│   ├── cloudflare-tunnel/              # CloudFlare tunnel service
-│   │   ├── config.template.yml         # Dynamic template
-│   │   └── credentials.json            # Tunnel credentials
-│   ├── traefik/                        # Traefik configuration
-│   ├── authelia/                       # SSO configuration
-│   ├── prometheus/                     # Monitoring config
+│   ├── cloudflare-tunnel/              # CloudFlare tunnel config
+│   ├── traefik/                        # Traefik dynamic config
+│   ├── ansible/                        # Ansible playbooks & roles
 │   └── [service-configs]/              # Individual service configs
-├── mcp-modules-rust/                   # MCP server implementation
-└── thebeast/                           # Multi-machine cluster configs
+│
+├── mcp-modules-rust/                   # [SUBMODULE] MCP server (Rust)
+├── claude-configs/                     # [SUBMODULE] Claude Code config
+├── cursor-configs/                     # [SUBMODULE] Cursor IDE config
+└── thebeast/                           # [SUBMODULE] Multi-machine scripts
+```
+
+### Cloning with Submodules
+
+```bash
+# Clone with all submodules
+git clone --recurse-submodules git@github.com:l3ocifer/homelab.git
+
+# Or, after cloning, initialize submodules
+git submodule update --init --recursive
 ```
 
 ## 🎯 Best Practices Implemented
