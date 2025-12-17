@@ -1,5 +1,28 @@
 # Domain Mapping & Migration Plan
 
+## AWS Account Inventory
+
+| Account | Alias | Account ID | Status | Purpose |
+|---------|-------|------------|--------|---------|
+| **LEO** | `leo` | 566828793530 | Active | Personal domains, githired |
+| **PIE** | `pie` | 844582634651 | Active | Production apps, localist |
+| **AWR** | `awr` | - | Active | Wheel repair business |
+| **UAI** | `uai` | 931800608582 | Empty | *Can be closed* |
+| **SCY** | `scy` | 272249435244 | Empty | *Can be closed* |
+| **DRE** | `dre` | - | Invalid token | *Check/close* |
+| **ABYSS** | `abyss` | - | Invalid token | *Check/close* |
+| ~~STEIN~~ | `stein` | - | Client | *Not included* |
+
+## EC2 Instances (Running)
+
+| Account | Instance | Type | Purpose | Action |
+|---------|----------|------|---------|--------|
+| LEO | i-056440552b6d018b6 | t2.micro | githired | Migrate to K3s |
+| PIE | i-0de5e7e35e5750836 | t3.medium | localist-production | Migrate to K3s |
+| PIE | i-0e459070ee440ae9b | t3.micro | localist-nat-instance | Delete after migration |
+
+**Potential Savings**: ~$50-80/month by migrating to K3s
+
 ## Current Domain Distribution
 
 ### AWS Account: LEO (aws-l3o-iam-leo)
@@ -7,10 +30,10 @@
 |--------|---------|---------|--------|
 | **omnilemma.com** | Z09855501N1MN7YHRYSGP | AI Meal Planning | Cloudflare |
 | **author.works** | Z05113051O0O0QJB9I8TC | Story Platform | Cloudflare |
+| **githired.work** | Z0125983ZLN7CEHH4L6K | Job Platform | Cloudflare |
 | l3o.xyz | Z1013772113BIU6E11F8M | Personal | Keep R53 |
 | leo.xyz | Z02072253MIJBPFU9Q6V0 | Personal | Keep R53 |
-| githired.work | Z0125983ZLN7CEHH4L6K | Job Platform | Cloudflare |
-| *45+ personal/family domains* | - | Personal sites | Keep R53 |
+| *40+ personal/family domains* | - | Personal sites | Keep R53 |
 
 ### AWS Account: PIE (aws-pie-iam-leo)
 | Domain | Zone ID | Purpose | Target |
@@ -19,8 +42,8 @@
 | **theblink.live** | Z07306541DD1119Y1CZO9 | Live Streaming | Cloudflare |
 | **omnilemma.com** | Z07237912PQNZMNTR5QMZ | AI Meal Planning | Cloudflare |
 | **hyvapaska.com** | Z08020813QWHGM48NU0Q7 | E-commerce | Cloudflare |
+| **americanangel.xyz** | Z07766371J7YL53DSCXBD | NFT Project | Cloudflare |
 | leopaska.com | Z0531770ZYV7JQ2RUJZZ | Personal | Cloudflare |
-| americanangel.xyz | Z07766371J7YL53DSCXBD | NFT Project | Cloudflare |
 | *25+ other domains* | - | Various | Keep R53 |
 
 ### AWS Account: AWR (aws-awr-iam-leo)
@@ -34,6 +57,15 @@
 | Domain | Zone ID | Status |
 |--------|---------|--------|
 | **leopaska.xyz** | 7ec42a804e4137fa29452223b5f82d26 | Active - Tunnel configured |
+
+## ⚠️ Redundancy Found
+
+| Issue | Details | Resolution |
+|-------|---------|------------|
+| **omnilemma.com** duplicate | Exists in BOTH LEO and PIE accounts | Delete one, consolidate to PIE |
+| Empty accounts (UAI, SCY) | No resources, still incur potential costs | Close accounts |
+| Invalid tokens (DRE, ABYSS) | Credentials expired/invalid | Refresh or close |
+| EC2 instances | 3 running instances (~$50-80/mo) | Migrate to K3s, terminate |
 
 ---
 
