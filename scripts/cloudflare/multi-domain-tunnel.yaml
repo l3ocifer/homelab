@@ -1,0 +1,170 @@
+# Multi-Domain Cloudflare Tunnel Configuration
+# Supports multiple domains through a single tunnel
+#
+# This configuration routes traffic from multiple domains
+# to the K3s Traefik ingress controller.
+#
+# Setup:
+#   1. Add each domain to Cloudflare
+#   2. Create CNAME records pointing to tunnel
+#   3. Apply this config to cloudflared
+
+tunnel: homelab-unified
+credentials-file: /etc/cloudflared/creds/credentials.json
+metrics: 0.0.0.0:2000
+no-autoupdate: true
+
+# Ingress rules - order matters, first match wins
+ingress:
+
+  # ============================================================
+  # DOMAIN: leopaska.xyz (Primary homelab domain)
+  # ============================================================
+
+  # --- K3s Production Applications ---
+  - hostname: argocd.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+    originRequest:
+      noTLSVerify: true
+
+  - hostname: localist.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: potluck.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: blink.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: ae.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: authorworks.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: trade.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: ursulai.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: omni.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: hyva.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # --- Infrastructure Services (via K3s Traefik) ---
+  - hostname: grafana.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: prometheus.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: traefik.leopaska.xyz
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # --- Docker Services (via host network) ---
+  # These go to Docker Traefik on the host
+  - hostname: workflow.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: workflow.leopaska.xyz
+
+  - hostname: openwebui.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: openwebui.leopaska.xyz
+
+  - hostname: homeassistant.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: homeassistant.leopaska.xyz
+
+  - hostname: jellyfin.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: jellyfin.leopaska.xyz
+
+  - hostname: warden.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: warden.leopaska.xyz
+
+  - hostname: minio.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: minio.leopaska.xyz
+
+  - hostname: coolify.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: coolify.leopaska.xyz
+
+  - hostname: pgadmin.leopaska.xyz
+    service: http://host.docker.internal:80
+    originRequest:
+      httpHostHeader: pgadmin.leopaska.xyz
+
+  # --- SSH Access (Zero Trust) ---
+  - hostname: ssh.leopaska.xyz
+    service: ssh://localhost:22
+
+  # --- Wildcard for leopaska.xyz (catch remaining) ---
+  - hostname: "*.leopaska.xyz"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # DOMAIN: ursulai.com (AI Voice Model Marketplace)
+  # ============================================================
+
+  - hostname: "*.ursulai.com"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: ursulai.com
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # DOMAIN: authorworks.io (AI Story Creation Platform)
+  # ============================================================
+
+  - hostname: "*.authorworks.io"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: authorworks.io
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # DOMAIN: potluck.pub (Community Dining Platform)
+  # ============================================================
+
+  - hostname: "*.potluck.pub"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: potluck.pub
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # DOMAIN: theblink.live (Live Streaming Platform)
+  # ============================================================
+
+  - hostname: "*.theblink.live"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: theblink.live
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # DOMAIN: omnilemma.com (AI Meal Planning)
+  # ============================================================
+
+  - hostname: "*.omnilemma.com"
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  - hostname: omnilemma.com
+    service: http://traefik.ingress-system.svc.cluster.local:80
+
+  # ============================================================
+  # Catch-all (must be last)
+  # ============================================================
+  - service: http_status:404

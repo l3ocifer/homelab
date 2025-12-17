@@ -204,7 +204,7 @@ All services accessible at `https://service.leopaska.xyz`:
 
 ### **Internal Access (LAN)**
 Services also accessible via:
-- `http://service.localhost` 
+- `http://service.localhost`
 - `http://192.168.1.200:port`
 
 ## 🔒 Security Architecture (Zero-Trust)
@@ -604,10 +604,10 @@ git submodule update --init --recursive
 
 ---
 
-**Cost**: ~$0.50/month (Route53 DNS only)  
-**Security**: Maximum (Zero public IP exposure)  
-**Performance**: Global CDN + DDoS protection  
-**Maintenance**: Automated updates and monitoring  
+**Cost**: ~$0.50/month (Route53 DNS only)
+**Security**: Maximum (Zero public IP exposure)
+**Performance**: Global CDN + DDoS protection
+**Maintenance**: Automated updates and monitoring
 
-**Last Updated**: November 2025  
+**Last Updated**: November 2025
 **Maintained By**: Leo Paska
