@@ -1,0 +1,104 @@
+# Homelab Git Ignore
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+*.p12
+.env
+.env.*
+!.env.example
+!.env.template
+secrets.yml
+secrets.yaml
+**/secrets/
+credentials.json
+!credentials.json.example
+
+# API keys and tokens
+.api-key
+*-api-key
+*.token
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+
+# Ansible
+*.retry
+.vault_pass
+vault_password
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.venv/
+venv/
+ENV/
+
+# Rust
+**/target/
+Cargo.lock
+!mcp-modules-rust/Cargo.lock
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Backups
+*.bak
+*.backup
+*.old
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Certificates (generated)
+acme.json
+certificates/
+
+# Local development
+.local/
+*.local
+
+# Submodule nested git (if any duplicates)
+services/ollama_proxy_server/.git
+
+# Backup directories
+.git-backup-*/

@@ -1,0 +1,18 @@
+[submodule "alef"]
+	path = alef
+	url = git@github.com:l3ocifer/alef.git
+[submodule "claude-configs"]
+	path = claude-configs
+	url = git@github.com:l3ocifer/claude-configs.git
+[submodule "cursor-configs"]
+	path = cursor-configs
+	url = git@github.com:l3ocifer/cursor-configs.git
+[submodule "mcp-modules-rust"]
+	path = mcp-modules-rust
+	url = git@github.com:l3ocifer/mcp-modules-rust.git
+[submodule "services"]
+	path = services
+	url = git@github.com:l3ocifer/services.git
+[submodule "thebeast"]
+	path = thebeast
+	url = git@github.com:l3ocifer/thebeast.git
