@@ -4,24 +4,29 @@
 
 | Account | Alias | Account ID | Status | Purpose |
 |---------|-------|------------|--------|---------|
-| **LEO** | `leo` | 566828793530 | Active | Personal domains, githired |
-| **PIE** | `pie` | 844582634651 | Active | Production apps, localist |
-| **AWR** | `awr` | - | Active | Wheel repair business |
-| **UAI** | `uai` | 931800608582 | Empty | *Can be closed* |
-| **SCY** | `scy` | 272249435244 | Empty | *Can be closed* |
-| **DRE** | `dre` | - | Invalid token | *Check/close* |
-| **ABYSS** | `abyss` | - | Invalid token | *Check/close* |
-| ~~STEIN~~ | `stein` | - | Client | *Not included* |
+| **LEO** | `leo` | 566828793530 | ✅ Active | Personal domains, githired |
+| **PIE** | `pie` | 844582634651 | ✅ Active | Production apps |
+| **BARGE** | `barge` | - | ✅ Active | Provisions Group (work) |
+
+### Removed Accounts (cleaned from ~/.aws/ and ~/.zshrc)
+- ~~UAI~~ (ursulai) - Empty, closed
+- ~~SCY~~ (scryar) - Empty, closed
+- ~~DRE~~ - Invalid token, closed
+- ~~ABYSS~~ - Invalid token, closed
+- ~~AWR~~ - Client account, removed from homelab configs
+- ~~STEIN~~ - Client account, not included
+
+### Notes
+- **Localist** is being transferred to separate SGAI AWS account
+- PIE account EC2 instances (localist-*) will be managed by SGAI
 
 ## EC2 Instances (Running)
 
 | Account | Instance | Type | Purpose | Action |
 |---------|----------|------|---------|--------|
 | LEO | i-056440552b6d018b6 | t2.micro | githired | Migrate to K3s |
-| PIE | i-0de5e7e35e5750836 | t3.medium | localist-production | Migrate to K3s |
-| PIE | i-0e459070ee440ae9b | t3.micro | localist-nat-instance | Delete after migration |
 
-**Potential Savings**: ~$50-80/month by migrating to K3s
+**Potential Savings**: ~$15-20/month by migrating githired to K3s
 
 ## Current Domain Distribution
 
