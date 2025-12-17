@@ -36,14 +36,21 @@ info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 TUNNEL_ID="8a8129e7-f8c3-4cc4-8b1f-9995da97fff0"
 TUNNEL_CNAME="${TUNNEL_ID}.cfargotunnel.com"
 
-# Production domains to add (from AWS Route53)
+# Production domains to add
+# Format: ["domain"]="registrar:zone_id" or ["domain"]="cloudflare:zone_id"
 declare -A DOMAINS=(
+    # Route53 domains
     ["potluck.pub"]="PIE:Z06744602W9W1NO99WVGH"
     ["theblink.live"]="PIE:Z07306541DD1119Y1CZO9"
     ["author.works"]="LEO:Z05113051O0O0QJB9I8TC"
     ["omnilemma.com"]="PIE:Z07237912PQNZMNTR5QMZ"
     ["hyvapaska.com"]="PIE:Z08020813QWHGM48NU0Q7"
     ["americanangel.xyz"]="PIE:Z07766371J7YL53DSCXBD"
+    # Cloudflare domains
+    ["ursulai.com"]="cloudflare:0afcbbbda732bf84824aaa2d7960bc41"
+    ["githired.work"]="cloudflare:5455229f61b5819fe9d538963461b318"
+    ["chimera.red"]="cloudflare:232b91f8bcf179b5b3a80406aacd7693"
+    ["lunasea.social"]="cloudflare:ca1949cc0497bbe6b447f075f0f0690a"
 )
 
 # Subdomains to create for each domain
@@ -192,6 +199,7 @@ setup_all_domains() {
             "jellyfin"
             # Production app subdomains
             "potluck" "blink" "ae" "hyva" "omni" "ursulai" "authorworks" "trade"
+            "githired" "chimera" "lunasea"
         )
 
         for sub in "${LEOPASKA_SUBDOMAINS[@]}"; do
