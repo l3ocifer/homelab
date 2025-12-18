@@ -1,0 +1,168 @@
+# Cloudflare Domains Configuration
+# =================================
+# All production domains managed by the homelab
+# Run: ./manage-domains.sh sync
+
+cloudflare:
+  account_id: "23e8fcd92ab0244ef1a1472a2538bafd"
+  tunnel_id: "8a8129e7-f8c3-4cc4-8b1f-9995da97fff0"
+
+domains:
+  # Infrastructure domain (54 subdomains)
+  - name: leopaska.xyz
+    zone_id: "7ec42a804e4137fa29452223b5f82d26"
+    purpose: infrastructure
+    subdomains:
+      # Monitoring & Infrastructure
+      - argocd
+      - grafana
+      - grafana-k3s
+      - prometheus
+      - prometheus-k3s
+      - traefik
+      - traefik-k3s
+      - loki
+      - uptimekuma
+      - nodeexporter
+      - umami           # web analytics
+      - vector          # log pipeline
+      # AI Services
+      - ollama
+      - openwebui
+      - librechat
+      - exo            # distributed inference
+      - proxy-admin
+      - proxy-api
+      - qdrant          # vector database
+      - mcp             # model context protocol
+      # Databases & Admin
+      - adminer
+      - pgadmin
+      - whodb
+      - rabbitmq
+      # Productivity
+      - workflow        # n8n
+      - homeassistant
+      - huginn
+      - postiz
+      - guacamole       # remote desktop gateway
+      - mqtt            # mosquitto
+      - mailhog
+      # Media
+      - jellyfin
+      - ipfs
+      - rtmp
+      - live
+      # Communication
+      - conduit
+      - element
+      - rustpad
+      - mailhog
+      # Security
+      - authelia
+      - warden
+      - auth            # logto (external auth)
+      - auth-admin      # logto admin          # vaultwarden
+      # Storage & Sync
+      - minio
+      - syncthing
+      # Production App Proxies (via leopaska.xyz)
+      - authorworks
+      - blink
+      - potluck
+      - omni
+      - hyva
+      - ae
+      - ursulai
+      - localist        # historical, now on SGAI
+      - trade
+      - lunasea         # tanks-js game
+      # Deprecated/Removing
+      # - rustdesk       # removed per user request
+      # Access
+      - ssh
+
+  # Production Apps
+  - name: potluck.pub
+    zone_id: "519ab94ac9c3e96c49300231f799a888"
+    purpose: production
+    app: potluck-pub
+    aws_account: pie
+
+  - name: theblink.live
+    zone_id: "e8fae09105ea83fe2ea9590032539e68"
+    purpose: production
+    app: theblink-live
+    aws_account: pie
+
+  - name: author.works
+    zone_id: "2a8b46280340c1bffaaaa5b96a11279d"
+    purpose: production
+    app: authorworks
+    aws_account: leo
+
+  - name: omnilemma.com
+    zone_id: "fc2d8335452bbfb098182df8d549c8ea"
+    purpose: production
+    app: omnilemma
+    aws_account: pie
+
+  - name: hyvapaska.com
+    zone_id: "4ab9231b51c50bde07f5a2bdbe23b072"
+    purpose: production
+    app: hyvapaska
+    aws_account: pie
+
+  - name: americanangel.xyz
+    zone_id: "3c5d5b27b965aa7a1b59442a6c89e4d0"
+    purpose: production
+    app: american-enlightenment
+    aws_account: pie
+
+  - name: ursulai.com
+    zone_id: "0afcbbbda732bf84824aaa2d7960bc41"
+    purpose: production
+    app: ursulai
+    aws_account: pie
+
+  - name: githired.work
+    zone_id: "5455229f61b5819fe9d538963461b318"
+    purpose: production
+    app: githired
+    aws_account: leo
+
+  - name: chimera.red
+    zone_id: "232b91f8bcf179b5b3a80406aacd7693"
+    purpose: production
+    app: chimera
+    aws_account: pie
+
+  - name: trillions.studio
+    zone_id: "aa32f17eb0e2b67f6c51489243873998"
+    purpose: production
+    app: trade-bot
+    aws_account: pie
+
+  - name: lunasea.social
+    zone_id: "ca1949cc0497bbe6b447f075f0f0690a"
+    purpose: production
+    app: tanks-js
+    aws_account: pie
+
+# Default DNS records for each domain
+default_records:
+  - name: "@"
+    type: CNAME
+    proxied: true
+  - name: "www"
+    type: CNAME
+    proxied: true
+  - name: "*"
+    type: CNAME
+    proxied: true
+  - name: "api"
+    type: CNAME
+    proxied: true
+  - name: "app"
+    type: CNAME
+    proxied: true
